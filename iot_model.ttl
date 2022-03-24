@@ -1,0 +1,938 @@
+@prefix voice: <http://voice.iot/> . 
+@prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dul: <http://www.loa-cnr.it/ontologies/DUL.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+# Лампа
+<http://voice.iot/lamp1> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/lamp1/label1> ;
+	<http://voice.iot/label> <http://voice.iot/lamp1/label2> ;
+	voice:hasPrototype voice:lightingPrototype.
+
+<http://voice.iot/lamp1/label1> rdfs:label "лампочка"@ru ;
+	<http://voice.iot/lemma> "лампочка".
+<http://voice.iot/lamp1/label2> rdfs:label "лампа"@ru ;
+	<http://voice.iot/lemma> "лампа".
+
+# Люстра
+<http://voice.iot/chandelier1> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/chandelier1/label1> ;
+	voice:hasPrototype voice:lightingPrototype.
+	
+<http://voice.iot/chandelier1/label1> rdfs:label "люстра"@ru ;
+	<http://voice.iot/lemma> "люстра".
+
+
+# Стиральная машина
+<http://voice.iot/washing_machine1> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/washing_machine1/label1> ;
+	<http://voice.iot/label> <http://voice.iot/washing_machine1/label2> ;
+	<http://voice.iot/label> <http://voice.iot/washing_machine1/label3> ;
+	ssn:hasSubSystem <http://voice.iot/washing_machine1-actuator>.
+
+<http://voice.iot/washing_machine1/label> rdfs:label "стиральная машина"@ru ;
+	<http://voice.iot/lemma> "стиральный";
+	<http://voice.iot/lemma> "машина".
+
+<http://voice.iot/washing_machine1/label2> rdfs:label "стиралка"@ru ;
+	<http://voice.iot/lemma> "стиралка".
+	
+<http://voice.iot/washing_machine1/label3> rdfs:label "стирка"@ru ;
+	<http://voice.iot/lemma> "стирка".
+
+<http://voice.iot/washing_machine1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/washing_machine1-actuator/OnOffFunction>.
+
+<http://voice.iot/washing_machine1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/washing_machine1-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/washing_machine1-actuator/function/Off>.
+
+<http://voice.iot/washing_machine1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/washing_machine1-actuator/function/On/label1>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degrees-temperature/optional>.
+
+<http://voice.iot/washing_machine1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/washing_machine1-actuator/function/On/label1> rdfs:label "постирать"@ru ;
+	<http://voice.iot/lemma> "постирать".
+	
+# Кондиционер/сплит системы
+<http://voice.iot/AirConditioning> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/AirConditioning/label1> ;
+	<http://voice.iot/label> <http://voice.iot/AirConditioning/label2> ;
+	<http://voice.iot/label> <http://voice.iot/AirConditioning/label3> ;
+	ssn:hasSubSystem <http://voice.iot/AirConditioning-actuator>.
+
+<http://voice.iot/AirConditioning/label1> rdfs:label "кондиционер"@ru ;
+	<http://voice.iot/lemma> "кондиционер".
+
+<http://voice.iot/AirConditioning/label2> rdfs:label "сплит система"@ru ;
+	<http://voice.iot/lemma> "сплит";
+	<http://voice.iot/lemma> "система".
+	
+<http://voice.iot/AirConditioning/label3> rdfs:label "сплитуха"@ru ;
+	<http://voice.iot/lemma> "сплитуха".
+
+<http://voice.iot/AirConditioning-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/AirConditioning-actuator/OnOffFunction>.
+
+<http://voice.iot/AirConditioning-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/AirConditioning-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/AirConditioning-actuator/function/Off>.
+
+<http://voice.iot/AirConditioning-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	voice:hasPrototype voice:SetCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/function/Set/label1>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degrees-temperature/optional>.
+
+<http://voice.iot/AirConditioning-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+# Будильник
+<http://voice.iot/AlarmClock> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/AlarmClock/label1> ;
+	ssn:hasSubSystem <http://voice.iot/AlarmClock-actuator>.
+
+<http://voice.iot/AlarmClock/label1> rdfs:label "будильник"@ru ;
+	<http://voice.iot/lemma> "будильник".
+
+<http://voice.iot/AlarmClock-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/AlarmClock-actuator/OnOffFunction>.
+
+<http://voice.iot/AlarmClock-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/AlarmClock-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/AlarmClock-actuator/function/Off>.
+
+<http://voice.iot/AlarmClock-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	voice:hasPrototype voice:SetCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/AlarmClock-actuator/function/On/label1>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/time/optional>.
+
+<http://voice.iot/AlarmClock-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/AlarmClock-actuator/function/On/label1> rdfs:label "разбуди"@ru ;
+	<http://voice.iot/lemma> "разбудить".
+	
+# CurtainsRelay	регулятор открытия/закрытия штор
+
+<http://voice.iot/CurtainsRelay> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/CurtainsRelay/label1> ;
+	ssn:hasSubSystem <http://voice.iot/CurtainsRelay-actuator>.
+
+<http://voice.iot/CurtainsRelay/label1> rdfs:label "регулятор открытия штор"@ru ;
+	<http://voice.iot/lemma> "регулятор";
+	<http://voice.iot/lemma> "открытие";
+	<http://voice.iot/lemma> "шторы".
+
+<http://voice.iot/CurtainsRelay-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/CurtainsRelay-actuator/OnOffFunction>.
+
+<http://voice.iot/CurtainsRelay-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/CurtainsRelay-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/CurtainsRelay-actuator/function/Off>.
+
+<http://voice.iot/CurtainsRelay-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/CurtainsRelay-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	voice:hasPrototype voice:SetCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/AlarmClock-actuator/function/On/label1>; # разбудить
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/percent/optional>.
+	
+# AudioSystem аудиосистема
+
+<http://voice.iot/AudioSystem> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/AudioSystem/label1> ;
+	ssn:hasSubSystem <http://voice.iot/AudioSystem-actuator>;
+	ssn:hasSubSystem <http://voice.iot/AudioSystemVolumeControl-actuator>.
+
+<http://voice.iot/AudioSystem/label1> rdfs:label "аудиосистема"@ru ;
+	<http://voice.iot/lemma> "аудиосистема".
+
+<http://voice.iot/AudioSystem-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/AudioSystem-actuator/OnOffFunction>.
+
+<http://voice.iot/AudioSystemVolumeControl-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/AudioSystem-actuator/UpFunction>;
+	voice:hasFunction <http://voice.iot/AudioSystem-actuator/DownFunction>;.
+
+<http://voice.iot/AudioSystem-actuator/UpFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/AudioSystem-actuator/function/Up>.
+
+<http://voice.iot/AudioSystem-actuator/function/Up> a voice:Command;
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Up/label1>; 
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Up/label2>; 
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Up/label3>; 
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/volume/optional>. # громкость
+
+<http://voice.iot/AudioSystem-actuator/function/Up/label1> rdfs:label "громче"@ru ;
+	<http://voice.iot/lemma> "громко".
+<http://voice.iot/AudioSystem-actuator/function/Up/label2> rdfs:label "увеличивать"@ru ;
+	<http://voice.iot/lemma> "увеличивать".
+<http://voice.iot/AudioSystem-actuator/function/Up/label3> rdfs:label "сделай громче"@ru ;
+	<http://voice.iot/lemma> "сделать";
+	<http://voice.iot/lemma> "громко".
+
+<http://voice.iot/AudioSystem-actuator/UpFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/AudioSystem-actuator/function/Down>.
+
+<http://voice.iot/AudioSystem-actuator/function/Down> a voice:Command;
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Down/label1>; 
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Down/label2>; 
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/Down/label3>; 
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/volume/optional>. # громкость
+
+<http://voice.iot/AudioSystem-actuator/function/Down/label1> rdfs:label "тише"@ru ;
+	<http://voice.iot/lemma> "тихо".
+<http://voice.iot/AudioSystem-actuator/function/Down/label2> rdfs:label "уменьшать"@ru ;
+	<http://voice.iot/lemma> "уменьшать".
+<http://voice.iot/AudioSystem-actuator/function/Down/label3> rdfs:label "сделай тише"@ru ;
+	<http://voice.iot/lemma> "сделать";
+	<http://voice.iot/lemma> "тихо".
+
+<http://voice.iot/AudioSystem-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/AudioSystem-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/AudioSystem-actuator/function/Off>.
+
+<http://voice.iot/AudioSystem-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/song/optional>.
+
+<http://voice.iot/AudioSystem-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	voice:hasPrototype voice:SetCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/On/label1>; 
+	<http://voice.iot/label> <http://voice.iot/AudioSystem-actuator/function/On/label2>; 
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/song/optional>.
+
+<http://voice.iot/AudioSystem-actuator/function/On/label1> rdfs:label "воспроизводить"@ru ;
+	<http://voice.iot/lemma> "воспроизводить".
+	
+<http://voice.iot/AudioSystem-actuator/function/On/label2> rdfs:label "проигрывать"@ru ;
+	<http://voice.iot/lemma> "проигрывать".
+
+# Printer	принтер
+
+<http://voice.iot/Printer> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/Printer/label1> ;
+	ssn:hasSubSystem <http://voice.iot/Printer-actuator>;
+	ssn:hasSubSystem <http://voice.iot/Printer-actuator-1>.
+
+<http://voice.iot/Printer/label1> rdfs:label "принтер"@ru ;
+	<http://voice.iot/lemma> "принтер".
+
+<http://voice.iot/Printer-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/Printer-actuator/OnOffFunction>.
+
+<http://voice.iot/Printer-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/Printer-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/Printer-actuator/function/Off>.
+
+<http://voice.iot/Printer-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/Printer-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype.
+	
+<http://voice.iot/Printer-actuator-1> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/Printer-actuator/Print>.
+
+<http://voice.iot/Printer-actuator/Print> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/Printer-actuator/function/Print>.
+
+<http://voice.iot/Printer-actuator/function/Print> a voice:Command;
+	<http://voice.iot/label> <http://voice.iot/Printer-actuator/function/On/label1>;
+	<http://voice.iot/label> <http://voice.iot/Printer-actuator/function/On/label2>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/file/notOptional>.
+
+<http://voice.iot/Printer-actuator/function/On/label1> rdfs:label "распечатай"@ru ;
+	<http://voice.iot/lemma> "распечатать".
+	
+<http://voice.iot/Printer-actuator/function/On/label2> rdfs:label "напечатай"@ru ;
+	<http://voice.iot/lemma> "напечатать".
+
+# WindowRelay	реле открытия/закрытия окна
+
+<http://voice.iot/WindowRelay> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay/label1> ;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay/label2> ;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay/label3> ;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay/label4> ;
+	ssn:hasSubSystem <http://voice.iot/WindowRelay-actuator>.
+
+<http://voice.iot/WindowRelay/label1> rdfs:label "регулятор открытия окна"@ru ;
+	<http://voice.iot/lemma> "регулятор";
+	<http://voice.iot/lemma> "открытие";
+	<http://voice.iot/lemma> "окно".
+
+<http://voice.iot/WindowRelay/label2> rdfs:label "реле открытия окна"@ru ;
+	<http://voice.iot/lemma> "реле";
+	<http://voice.iot/lemma> "открытие";
+	<http://voice.iot/lemma> "окно".
+
+<http://voice.iot/WindowRelay/label3> rdfs:label "регулятор закрытия окна"@ru ;
+	<http://voice.iot/lemma> "регулятор";
+	<http://voice.iot/lemma> "закрытие";
+	<http://voice.iot/lemma> "окно".
+
+<http://voice.iot/WindowRelay/label4> rdfs:label "реле закрытия окна"@ru ;
+	<http://voice.iot/lemma> "реле";
+	<http://voice.iot/lemma> "закрытие";
+	<http://voice.iot/lemma> "окно".
+
+<http://voice.iot/WindowRelay-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/WindowRelay-actuator/OnOffFunction>.
+
+<http://voice.iot/WindowRelay-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/WindowRelay-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/WindowRelay-actuator/function/Off>.
+
+<http://voice.iot/WindowRelay-actuator/function/Off> a voice:Command;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay-actuator/function/Off/label1>;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/WindowRelay-actuator/function/Off/label1> rdfs:label "закрой"@ru ;
+	<http://voice.iot/lemma> "закрыть".
+
+<http://voice.iot/WindowRelay-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	voice:hasPrototype voice:SetCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/WindowRelay-actuator/function/On/label1>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/percent/optional>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degree/optional>.
+	
+<http://voice.iot/WindowRelay-actuator/function/On/label1> rdfs:label "проветри"@ru ;
+	<http://voice.iot/lemma> "проветривать".
+	
+# DoorBell	дверной звонок
+
+<http://voice.iot/DoorBell> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/DoorBell/label1> ;
+	<http://voice.iot/label> <http://voice.iot/DoorBell/label2> ;
+	ssn:hasSubSystem <http://voice.iot/DoorBell-actuator>.
+
+<http://voice.iot/DoorBell/label1> rdfs:label "дверной звонок"@ru ;
+	<http://voice.iot/lemma> "дверной";
+	<http://voice.iot/lemma> "звонок".
+
+<http://voice.iot/DoorBell/label2> rdfs:label "звонок"@ru ;
+	<http://voice.iot/lemma> "звонок".
+
+<http://voice.iot/DoorBell-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/DoorBell-actuator/OnOffFunction>.
+
+<http://voice.iot/DoorBell-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/DoorBell-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/DoorBell-actuator/function/Off>.
+
+<http://voice.iot/DoorBell-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/DoorBell-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/percent/optional>.
+	
+# CoffeeMachine	кофеварка
+
+<http://voice.iot/CoffeeMachine> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/CoffeeMachine/label1> ;
+	<http://voice.iot/label> <http://voice.iot/CoffeeMachine/label2> ;
+	ssn:hasSubSystem <http://voice.iot/CoffeeMachine-actuator>;
+	ssn:hasSubSystem <http://voice.iot/CoffeeMachine-actuator2>.
+
+<http://voice.iot/CoffeeMachine/label1> rdfs:label "кофемашина"@ru ;
+	<http://voice.iot/lemma> "кофемашина".
+
+<http://voice.iot/CoffeeMachine/label2> rdfs:label "кофеварка"@ru ;
+	<http://voice.iot/lemma> "кофеварка".
+
+<http://voice.iot/CoffeeMachine-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/CoffeeMachine-actuator/OnOffFunction>.
+
+<http://voice.iot/CoffeeMachine-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/CoffeeMachine-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/CoffeeMachine-actuator/function/Off>.
+
+<http://voice.iot/CoffeeMachine-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/CoffeeMachine-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/percent/optional>.
+
+<http://voice.iot/CoffeeMachine-actuator2> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/CoffeeMachine-actuator/MakeCoffeeFunction>.
+
+<http://voice.iot/CoffeeMachine-actuator/MakeCoffeeFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/CoffeeMachine-actuator/function/MakeCoffee>.
+	
+<http://voice.iot/CoffeeMachine-actuator/function/MakeCoffee> a voice:Command;
+	<http://voice.iot/label> <http://voice.iot/function/MakeCoffee/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/MakeCoffee/label2>;
+	<http://voice.iot/label> <http://voice.iot/function/MakeCoffee/label3>;
+	<http://voice.iot/label> <http://voice.iot/function/MakeCoffee/label4>;
+	<http://voice.iot/label> <http://voice.iot/function/MakeCoffee/label5>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/Program/optional>.
+	
+<http://voice.iot/function/MakeCoffee/label1> rdfs:label "свари"@ru ;
+	<http://voice.iot/lemma> "сваривать". # сварить
+	
+<http://voice.iot/function/MakeCoffee/label2> rdfs:label "вари"@ru ;
+	<http://voice.iot/lemma> "варить".
+	
+<http://voice.iot/function/MakeCoffee/label5> rdfs:label "вари"@ru ;
+	<http://voice.iot/lemma> "варя".
+
+<http://voice.iot/function/MakeCoffee/label3> rdfs:label "сделай"@ru ;
+	<http://voice.iot/lemma> "сделать".
+	
+<http://voice.iot/function/MakeCoffee/label4> rdfs:label "сделай кофе"@ru ;
+	<http://voice.iot/lemma> "сделать";
+	<http://voice.iot/lemma> "кофе".
+	
+
+
+#smartBreadMaker
+#SmartMicrowave
+#HeatingFloor
+#FloorLite  подсветка пола
+#SmartFridge  умный холодильник
+
+
+# Хлебопечка
+<http://voice.iot/smartBreadMaker> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/smartBreadMaker/label1> ;
+	<http://voice.iot/label> <http://voice.iot/smartBreadMaker/label2> ;
+	<http://voice.iot/label> <http://voice.iot/smartBreadMaker/label3> ;
+	ssn:hasSubSystem <http://voice.iot/smartBreadMaker1-actuator>.
+
+<http://voice.iot/smartBreadMaker/label1> rdfs:label "хлебопечка"@ru ;
+	<http://voice.iot/lemma> "хлебопечка".
+<http://voice.iot/smartBreadMaker/label2> rdfs:label "хлебопечь"@ru ;
+	<http://voice.iot/lemma> "хлебопечь".
+<http://voice.iot/smartBreadMaker/label3> rdfs:label "выпекалка"@ru ;
+	<http://voice.iot/lemma> "выпекалка".
+
+<http://voice.iot/smartBreadMaker1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/smartBreadMaker1-actuator/OnOffFunction>.
+
+<http://voice.iot/smartBreadMaker1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/smartBreadMaker1-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/smartBreadMaker1-actuator/function/Off>.
+
+<http://voice.iot/smartBreadMaker1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/smartBreadMaker1-actuator/function/On/label1>;
+	<http://voice.iot/label> <http://voice.iot/smartBreadMaker1-actuator/function/On/label2>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/Program/optional>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/time/optional>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degrees-temperature/optional>.
+
+
+<http://voice.iot/smartBreadMaker1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/smartBreadMaker1-actuator/function/On/label1> rdfs:label "испечь"@ru ;
+	<http://voice.iot/lemma> "испечь".
+
+<http://voice.iot/smartBreadMaker1-actuator/function/On/label2> rdfs:label "приготовить"@ru ;
+	<http://voice.iot/lemma> "приготовить".
+
+
+<http://voice.iot/Param/Program/optional> a <http://voice.iot/Parameter>; 
+  <http://voice.iot/valueType> <http://voice.iot/Program>;
+<http://voice.iot/label> <http://voice.iot/Param/Program/label>;
+<http://voice.iot/label> <http://voice.iot/Param/Program/label-1>.
+
+<http://voice.iot/Param/Program/label> rdfs:label "режим"@ru ;
+  <http://voice.iot/lemma> "режим".
+
+ <http://voice.iot/Param/Program/label-1> rdfs:label "программу"@ru ;
+  <http://voice.iot/lemma> "программа".
+
+# Микроволновка
+<http://voice.iot/SmartMicrowave> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave/label1> ;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave/label2> ;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave/label3> ;
+	ssn:hasSubSystem <http://voice.iot/SmartMicrowave1-actuator>.
+
+<http://voice.iot/SmartMicrowave/label1> rdfs:label "микроволновка"@ru ;
+	<http://voice.iot/lemma> "микроволновка".
+
+<http://voice.iot/SmartMicrowave/label2> rdfs:label "микроволновая печь"@ru ;
+	<http://voice.iot/lemma> "микроволновый";
+#	<http://voice.iot/lemma> "микроволновой";
+	<http://voice.iot/lemma> "печь".
+
+<http://voice.iot/SmartMicrowave/label3> rdfs:label "СВЧ-печь"@ru ;
+	<http://voice.iot/lemma> "СВЧ";
+	<http://voice.iot/lemma> "печь".
+
+<http://voice.iot/SmartMicrowave1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/SmartMicrowave1-actuator/OnOffFunction>.
+
+<http://voice.iot/SmartMicrowave1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/SmartMicrowave1-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/SmartMicrowave1-actuator/function/Off>.
+
+<http://voice.iot/SmartMicrowave1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave1-actuator/function/On/label1>;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave1-actuator/function/On/label2>;
+	<http://voice.iot/label> <http://voice.iot/SmartMicrowave1-actuator/function/On/label3>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/Program/optional>;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/time/optional>.
+
+
+<http://voice.iot/SmartMicrowave1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/SmartMicrowave1-actuator/function/On/label1> rdfs:label "разогреть"@ru ;
+	<http://voice.iot/lemma> "разогреть".
+
+<http://voice.iot/SmartMicrowave1-actuator/function/On/label2> rdfs:label "приготовить"@ru ;
+	<http://voice.iot/lemma> "приготовить".
+
+<http://voice.iot/SmartMicrowave1-actuator/function/On/label3> rdfs:label "погреть"@ru ;
+	<http://voice.iot/lemma> "погреть".
+
+
+# Умный пол с подогревом
+<http://voice.iot/HeatingFloor> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/HeatingFloor/label1> ;
+	<http://voice.iot/label> <http://voice.iot/HeatingFloor/label2> ;
+	ssn:hasSubSystem <http://voice.iot/HeatingFloor1-actuator>.
+
+<http://voice.iot/HeatingFloor/label1> rdfs:label "пол"@ru ;
+	<http://voice.iot/lemma> "пол".
+
+<http://voice.iot/HeatingFloor/label2> rdfs:label "пол с подогревом"@ru ;
+	<http://voice.iot/lemma> "пол";
+	<http://voice.iot/lemma> "подогрев".
+
+<http://voice.iot/HeatingFloor1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/HeatingFloor1-actuator/OnOffFunction>.
+
+<http://voice.iot/HeatingFloor1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/HeatingFloor1-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/HeatingFloor1-actuator/function/Off>.
+
+<http://voice.iot/HeatingFloor1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degrees-temperature/optional>.
+
+
+<http://voice.iot/HeatingFloor1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+
+# FloorLite
+<http://voice.iot/FloorLite> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/FloorLite/label1> ;
+	<http://voice.iot/label> <http://voice.iot/FloorLite/label2> ;
+	<http://voice.iot/label> <http://voice.iot/FloorLite/label3> ;
+	ssn:hasSubSystem <http://voice.iot/FloorLite1-actuator>.
+
+<http://voice.iot/FloorLite/label1> rdfs:label "подсветка"@ru ;
+	<http://voice.iot/lemma> "подсветка".
+<http://voice.iot/FloorLite/label2> rdfs:label "подсветка пола"@ru ;
+	<http://voice.iot/lemma> "подсветка";
+	<http://voice.iot/lemma> "пол".
+<http://voice.iot/FloorLite/label3> rdfs:label "напольные лампочки"@ru ;
+	<http://voice.iot/lemma> "напольный";
+	<http://voice.iot/lemma> "лампочка".
+
+
+<http://voice.iot/FloorLite1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/FloorLite1-actuator/OnOffFunction>.
+
+<http://voice.iot/FloorLite1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/FloorLite1-actuator/function/On>;
+	voice:hasCommand <http://voice.iot/FloorLite1-actuator/function/Off>.
+
+<http://voice.iot/FloorLite1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/FloorLite1-actuator/function/On/label1> ;
+	<http://voice.iot/label> <http://voice.iot/FloorLite1-actuator/function/On/label2> ;
+	<http://voice.iot/label> <http://voice.iot/FloorLite1-actuator/function/On/label3> .
+
+<http://voice.iot/FloorLite1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+<http://voice.iot/FloorLite1-actuator/function/On/label3> rdfs:label "подсветить"@ru ;
+	<http://voice.iot/lemma> "подсветить".
+
+
+# SmartFridge
+<http://voice.iot/SmartFridge> a ssn:System;
+	<http://voice.iot/label> <http://voice.iot/SmartFridge1/label1> ;
+	<http://voice.iot/label> <http://voice.iot/SmartFridge1/label2> ;
+	<http://voice.iot/label> <http://voice.iot/SmartFridge1/label3> ;
+	ssn:hasSubSystem <http://voice.iot/SmartFridge1-actuator>.
+
+<http://voice.iot/SmartFridge1/label1> rdfs:label "холодильник"@ru ;
+	<http://voice.iot/lemma> "холодильник".
+<http://voice.iot/SmartFridge1/label2> rdfs:label "морозилка"@ru ;
+	<http://voice.iot/lemma> "морозилка";
+	<http://voice.iot/lemma> "пол".
+<http://voice.iot/SmartFridge1/label3> rdfs:label "морозильная камера"@ru ;
+	<http://voice.iot/lemma> "морозильный";
+	<http://voice.iot/lemma> "камера".
+
+
+<http://voice.iot/SmartFridge1-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/SmartFridge1-actuator/OnOffFunction>.
+
+<http://voice.iot/SmartFridge1-actuator/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/FloorLite1-actuator/function/On> ;
+	voice:hasCommand <http://voice.iot/FloorLite1-actuator/function/Off>.
+
+<http://voice.iot/SmartFridge1-actuator/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/label> <http://voice.iot/SmartFridge1-actuator/function/On/label1> ;
+	<http://voice.iot/label> <http://voice.iot/SmartFridge1-actuator/function/On/label2> ;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/Program/optional> ;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/degrees-temperature/optional>.
+
+<http://voice.iot/SmartFridge1-actuator/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+
+# Prototype
+
+voice:lightingPrototype a voice:Prototype;
+	<http://voice.iot/label> <http://voice.iot/lighting/label> ;
+	ssn:hasSubSystem <http://voice.iot/OnOff-actuator> .
+
+<http://voice.iot/lighting/label> rdfs:label "свет"@ru ;
+	<http://voice.iot/lemma> "свет".
+
+<http://voice.iot/OnOff-actuator> a voice:Actuator;
+	voice:hasFunction <http://voice.iot/OnOffFunction>.
+
+<http://voice.iot/OnOffFunction> a voice:ActuatingFunction;
+	voice:hasCommand <http://voice.iot/function/On>;
+	voice:hasCommand <http://voice.iot/function/Off>.
+	
+<http://voice.iot/function/On> a voice:Command;
+	voice:hasPrototype voice:OnCommandPrototype;
+	<http://voice.iot/hasParameter> <http://voice.iot/Param/lumen/optional>.
+	
+<http://voice.iot/function/Off> a voice:Command;
+	voice:hasPrototype voice:OffCommandPrototype.
+	
+# общее
+
+# ?? PrototypeCommand
+voice:OnCommandPrototype a voice:PrototypeCommand;        
+	<http://voice.iot/label> <http://voice.iot/function/On/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/On/label2>.
+
+voice:OffCommandPrototype  a voice:PrototypeCommand;
+	<http://voice.iot/label> <http://voice.iot/function/Off/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/Off/label2>;
+	<http://voice.iot/label> <http://voice.iot/function/Off/label3>;
+	<http://voice.iot/label> <http://voice.iot/function/Off/label4>;
+	<http://voice.iot/label> <http://voice.iot/function/Off/label5>.
+
+voice:SetCommandPrototype a voice:PrototypeCommand;
+	<http://voice.iot/label> <http://voice.iot/function/Set/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/Set/label2>.
+
+# общее 
+# включать
+<http://voice.iot/function/On/label1> rdfs:label "включать"@ru ;
+	<http://voice.iot/lemma> "включать".
+<http://voice.iot/function/On/label2> rdfs:label "вруби"@ru ;
+	<http://voice.iot/lemma> "врубить".
+
+# выключать
+<http://voice.iot/function/Off/label1> rdfs:label "выключать"@ru ;
+	<http://voice.iot/lemma> "выключать".
+<http://voice.iot/function/Off/label2> rdfs:label "выруби"@ru ;
+	<http://voice.iot/lemma> "вырубить".
+<http://voice.iot/function/Off/label3> rdfs:label "оффни"@ru ;
+	<http://voice.iot/lemma> "оффнуть".
+<http://voice.iot/function/Off/label4> rdfs:label "прекрати"@ru ;
+	<http://voice.iot/lemma> "прекратить".
+<http://voice.iot/function/Off/label5> rdfs:label "останови"@ru ;
+	<http://voice.iot/lemma> "остановить".	
+
+# устанавливать (set)
+<http://voice.iot/function/Set/label1> rdfs:label "установи"@ru ;
+	<http://voice.iot/lemma> "устанавливать".
+<http://voice.iot/function/Set/label2> rdfs:label "поставь"@ru ;
+	<http://voice.iot/lemma> "поставить".
+
+
+# Increase-Decrease PrototypeCommand
+voice:IncreaseCommandPrototype a voice:PrototypeCommand;        
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label2>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label3>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label4>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label5>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label6>;
+	<http://voice.iot/label> <http://voice.iot/function/Increase/label7>.
+
+voice:DecreaseCommandPrototype a voice:PrototypeCommand;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label1>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label2>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label3>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label4>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label5>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label6>;
+	<http://voice.iot/label> <http://voice.iot/function/Decrease/label7>.
+
+# увеличивать
+<http://voice.iot/function/Increase/label1> rdfs:label "увеличить"@ru ;
+	<http://voice.iot/lemma> "увеличить".
+<http://voice.iot/function/Increase/label2> rdfs:label "прибавить"@ru ;
+	<http://voice.iot/lemma> "прибавить" .
+<http://voice.iot/function/Increase/label3> rdfs:label "прибавлять"@ru ;
+	<http://voice.iot/lemma> "прибавлять" .
+<http://voice.iot/function/Increase/label4> rdfs:label "увеличивать"@ru ;
+	<http://voice.iot/lemma> "увеличивать" .
+<http://voice.iot/function/Increase/label5> rdfs:label "повысить"@ru ;
+	<http://voice.iot/lemma> "повысить" .
+<http://voice.iot/function/Increase/label6> rdfs:label "повышать"@ru ;
+	<http://voice.iot/lemma> "повышать" .
+<http://voice.iot/function/Increase/label7> rdfs:label "усиливаться"@ru ;
+	<http://voice.iot/lemma> "усиливаться".
+
+# уменьшать
+<http://voice.iot/function/Decrease/label1> rdfs:label "уменьшить"@ru ;
+	<http://voice.iot/lemma> "уменьшить".
+<http://voice.iot/function/Decrease/label2> rdfs:label "снизить"@ru ;
+	<http://voice.iot/lemma> "снизить".
+<http://voice.iot/function/Decrease/label3> rdfs:label "уменьшать"@ru ;
+	<http://voice.iot/lemma> "уменьшать".
+<http://voice.iot/function/Decrease/label4> rdfs:label "снижать"@ru ;
+	<http://voice.iot/lemma> "снижать".
+<http://voice.iot/function/Decrease/label5> rdfs:label "падать"@ru ;
+	<http://voice.iot/lemma> "падать" .
+<http://voice.iot/function/Decrease/label6> rdfs:label "убавить"@ru ;
+	<http://voice.iot/lemma> "убавить" .
+<http://voice.iot/function/Decrease/label7> rdfs:label "убавлять"@ru ;
+	<http://voice.iot/lemma> "убавлять".
+
+# Params
+<http://voice.iot/Param/degrees-temperature/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/degrees-temperature/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/degrees-temperature/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/degrees-temperature/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/degrees-temperature/label> rdfs:label "градус"@ru ;
+	<http://voice.iot/lemma> "градус".
+
+# громкость
+<http://voice.iot/Param/volume/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/volume/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/degrees-temperature/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/volume/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/volume/label> rdfs:label "громкость"@ru ;
+	<http://voice.iot/lemma> "громкость".
+	
+	
+<http://voice.iot/Param/degree/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/degree/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/degree/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/number>;
+	<http://voice.iot/label> <http://voice.iot/Param/degree/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/degree/label> rdfs:label "градус"@ru ;
+	<http://voice.iot/lemma> "градус".
+	
+
+<http://voice.iot/Param/lumen/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/Number>;
+	<http://voice.iot/label> <http://voice.iot/Param/lumen/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/lumen/notOptional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/Number>;
+	<http://voice.iot/label> <http://voice.iot/Param/lumen/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+	
+<http://voice.iot/Param/lumen/label> rdfs:label "люмен"@ru ;
+	<http://voice.iot/lemma> "люмен".
+
+<http://voice.iot/Param/time/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/Time>;
+	<http://voice.iot/label> <http://voice.iot/Param/time/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/time/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/Time>;
+	<http://voice.iot/label> <http://voice.iot/Param/time/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/time/label> rdfs:label "час"@ru ;
+	<http://voice.iot/lemma> "час".
+	
+<http://voice.iot/Param/percent/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/Percent>;
+	<http://voice.iot/label> <http://voice.iot/Param/percent/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/percent/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/Percent>;
+	<http://voice.iot/label> <http://voice.iot/Param/percent/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/percent/label> rdfs:label "процентов"@ru ;
+	<http://voice.iot/lemma> "процент".
+
+<http://voice.iot/Param/song/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/song>;
+	<http://voice.iot/label> <http://voice.iot/Param/song/label>;
+	<http://voice.iot/label> <http://voice.iot/Param/song2/label>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/song/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/song>;
+	<http://voice.iot/label> <http://voice.iot/Param/song/label>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/song/label> rdfs:label "песню"@ru ;
+	<http://voice.iot/lemma> "песня".
+	
+<http://voice.iot/Param/song2/label> rdfs:label "трек"@ru ;
+	<http://voice.iot/lemma> "трек".
+	
+<http://voice.iot/Param/file/optional> a <http://voice.iot/Parameter>; 
+	<http://voice.iot/valueType> <http://voice.iot/file>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-2>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-3>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-4>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-5>;
+	<http://voice.iot/optional> "true"^^xsd:boolean.
+
+<http://voice.iot/Param/file/notOptional> a <http://voice.iot/Parameter>;
+	<http://voice.iot/valueType> <http://voice.iot/file>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-2>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-3>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-4>;
+	<http://voice.iot/label> <http://voice.iot/Param/file/label-5>;
+	<http://voice.iot/optional> "false"^^xsd:boolean.
+
+<http://voice.iot/Param/file/label> rdfs:label "файл"@ru ;
+	<http://voice.iot/lemma> "файл".
+	
+<http://voice.iot/Param/file/label-2> rdfs:label "документ"@ru ;
+	<http://voice.iot/lemma> "документ".
+	
+<http://voice.iot/Param/file/label-3> rdfs:label "картинку"@ru ;
+	<http://voice.iot/lemma> "картинка".
+	
+<http://voice.iot/Param/file/label-4> rdfs:label "фотографию"@ru ;
+	<http://voice.iot/lemma> "фотография".
+
+<http://voice.iot/Param/file/label-5> rdfs:label "фото"@ru ;
+	<http://voice.iot/lemma> "фото".
+	
+# Command Features 
+voice:CoffeeMachine voice:hasCommandFeature <http://voice.iot/CommandFeature/coffee> .
+
+<http://voice.iot/CommandFeature/coffee> voice:hasLabel [rdfs:label "кофе"@ru ;
+	<http://voice.iot/lemma> "кофе" ].
+
+
+voice:CurtainsRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/jalousie> .
+
+<http://voice.iot/CommandFeature/jalousie> voice:hasLabel [rdfs:label "жалюзи"@ru ;
+	<http://voice.iot/lemma> "жалюзи" ].
+
+voice:AudioSystem voice:hasCommandFeature <http://voice.iot/CommandFeature/music> .
+
+<http://voice.iot/CommandFeature/music> voice:hasLabel [rdfs:label "музыка"@ru ;
+	<http://voice.iot/lemma> "музыка" ].
+
+voice:washing_machine1 voice:hasCommandFeature <http://voice.iot/CommandFeature/washing> .
+
+<http://voice.iot/CommandFeature/washing> voice:hasLabel [rdfs:label "стирка"@ru ;
+	<http://voice.iot/lemma> "стирка" ].
+
+voice:washing_machine1 voice:hasCommandFeature <http://voice.iot/CommandFeature/linen> .
+
+<http://voice.iot/CommandFeature/linen> voice:hasLabel [rdfs:label "белье"@ru ;
+	<http://voice.iot/lemma> "белье" ].
+
+voice:smartBreadMaker voice:hasCommandFeature <http://voice.iot/CommandFeature/cooking> .
+
+<http://voice.iot/CommandFeature/cooking> voice:hasLabel [rdfs:label "готовка"@ru ;
+	<http://voice.iot/lemma> "готовка" ].
+
+voice:smartBreadMaker voice:hasCommandFeature <http://voice.iot/CommandFeature/bread> .
+
+<http://voice.iot/CommandFeature/bread> voice:hasLabel [rdfs:label "хлеб"@ru ;
+	<http://voice.iot/lemma> "хлеб" ].
+
+voice:SmartOven voice:hasCommandFeature <http://voice.iot/CommandFeature/cooking> .
+
+voice:SmartKettle voice:hasCommandFeature <http://voice.iot/CommandFeature/water> .
+
+<http://voice.iot/CommandFeature/water> voice:hasLabel [rdfs:label "вода"@ru ;
+	<http://voice.iot/lemma> "вода" ].
+
+voice:SmartKettle voice:hasCommandFeature <http://voice.iot/CommandFeature/tea> .
+
+<http://voice.iot/CommandFeature/tea> voice:hasLabel [rdfs:label "чай"@ru ;
+	<http://voice.iot/lemma> "чай" ].
+
+voice:WindowRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/stuffy> .
+
+<http://voice.iot/CommandFeature/stuffy> voice:hasLabel [rdfs:label "душно"@ru ;
+	<http://voice.iot/lemma> "душно" ].
+
+voice:WindowRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/rainy> .
+
+<http://voice.iot/CommandFeature/rainy> voice:hasLabel [rdfs:label "дождь"@ru ;
+	<http://voice.iot/lemma> "дождь" ].
+
+voice:HumiditySensor voice:hasCommandFeature <http://voice.iot/CommandFeature/humidity> .
+
+<http://voice.iot/CommandFeature/humidity> voice:hasLabel [rdfs:label "влажность"@ru ;
+	<http://voice.iot/lemma> "влажность" ].
+
+voice:WaterTapRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/water> .
+
+voice:WaterTapRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/bath> .
+
+<http://voice.iot/CommandFeature/bath> voice:hasLabel [rdfs:label "ванна"@ru ;
+	<http://voice.iot/lemma> "ванна" ].
+
+voice:WaterTapRelay voice:hasCommandFeature <http://voice.iot/CommandFeature/water-pressure> .
+
+<http://voice.iot/CommandFeature/water-pressure> voice:hasLabel [rdfs:label "напор"@ru ;
+	<http://voice.iot/lemma> "напор" ].
+
+voice:SmartToaster voice:hasCommandFeature <http://voice.iot/CommandFeature/toast> .
+
+<http://voice.iot/CommandFeature/toast> voice:hasLabel [rdfs:label "тост"@ru ;
+	<http://voice.iot/lemma> "тост" ].
