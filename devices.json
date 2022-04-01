@@ -1,0 +1,1 @@
+{"devices": [{"KB_ID": "http://voice.iot/lamp1", "system": "Lamp", "ip": "192.0.0.1", "queries": [{"KB_ID": "http://voice.iot/OnCommandPrototype", "name": "on", "parameters": []}, {"KB_ID": "http://voice.iot/OffCommandPrototype", "name": "off", "parameters": []}]}]}
