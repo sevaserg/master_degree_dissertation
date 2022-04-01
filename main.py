@@ -1,5 +1,12 @@
 from rdflib import Graph
 from tabulate import tabulate
+import pymorphy2
+import json
+import sys
+
+g = Graph()
+devices_json_path = ""
+
 prefixes = '''PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -8,13 +15,13 @@ PREFIX iot: <http://voice.iot#>
 '''
 
 def search_query(name):
-    q =  prefixes + '''SELECT * WHERE { ?subject ?predicate ?object .
-            ?object rdfs:label "''' + name + '''"@ru .
-            ?subject a ?cls .
-            
-            ?object rdfs:label ?lbl .
-            }
-            '''
+    q =  prefixes + '''SELECT * WHERE {
+        ?subject ?predicate ?object .
+        ?object rdfs:label "''' + name + '''"@ru .
+        ?object rdfs:label ?lbl .
+        ?subject a ?cls .
+        }
+        '''
     return g.query(q)
 
 def search_all():
@@ -26,16 +33,84 @@ def search_all():
         '''
     return g.query(q)
 
+def tokenize_and_lemmatize(sentence):
+    data = []
+    for word in sentence.split(" "):
+        try:
+            data.append(morph.parse(word)[0].normal_form)
+        except:
+            data.append(word)
+    return data
 
-g = Graph()
+class nl_query:
+    def __init__(self, sentence):
+        self.system         = "none"
+        self.commandProto   = "none"
+        self.params          = []
 
-g.parse("./iot_model.ttl")
-test = []
-for data in search_all(): # search_query("люмен"):
-    #print(data.subject, data.object, data.lbl, data.cls)
-    test.append([data.subject, data.object, data.lbl, data.cls])
+        tokenized_sentence  = tokenize_and_lemmatize(sentence)
+        for word in tokenized_sentence:
+            data_to_parse   = search_query(word)
+            for entry in data_to_parse:
+                if str(entry.cls) == "http://purl.oclc.org/NET/ssnx/ssn#System":
+                    self.system = str(entry.subject)
+                if str(entry.cls) == "http://voice.iot/PrototypeCommand":
+                    self.commandProto = str(entry.subject)
+
+    def print(self):
+        print("System:", self.system)
+        print("CommandProto:", self.commandProto)
+        print("Params:")
+        for param in self.params:
+            print(param)
+    
+    def execute(self):
+        f = open(devices_json_path, "r")
+        devices = json.loads(f.read())
+        f.close()
+        system_q = ""
+        func_q   = ""
+        
+        for device in devices["devices"]:
+            if device["KB_ID"] == self.system:
+                system_q = device["system"]
+                for q in device["queries"]:
+                    if q["KB_ID"] == self.commandProto:
+                        func_q = q["name"]
+                        break
+                break
+        if system_q != "" and func_q != "":
+            pass
 
 
-col_names = ["Item URI", "Label URI", "Label", "Class"]
-
-print(tabulate(test, headers=col_names))
+if __name__ == "__main__":
+    f       = open ('config.json', "r")
+    config  = json.loads(f.read())
+    
+    kb_path = ""
+    try:
+        devices_json_path = config["devices_path"]
+    except:
+        raise Exception("No \"devices\" path in config.json!")
+    try:
+        kb_path = config["kb_path"]
+        f.close()
+    except:
+        raise Exception("No \"knowledge base\" path in config.json!")
+    try:
+        f = open (devices_json_path, "r")
+        f.close()
+    except:
+        raise Exception ("Devices file \""+devices_json_path+"\" does not exist! Check if path in config.json is correct.")
+    try:
+        f = open (kb_path, "r")
+        f.close()
+    except:
+        raise Exception ("Knowledge base file \""+kb_path+"\" does not exist! Check if path in config.json is correct.")
+    g.parse(kb_path)
+    
+    morph = pymorphy2.MorphAnalyzer(lang='ru')
+    
+    
+    data = nl_query(sys.argv[1])
+    data.execute()

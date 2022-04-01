@@ -648,15 +648,15 @@ voice:SetCommandPrototype a voice:PrototypeCommand;
 	<http://voice.iot/label> <http://voice.iot/function/Set/label2>.
 
 # общее 
-# включать
-<http://voice.iot/function/On/label1> rdfs:label "включать"@ru ;
-	<http://voice.iot/lemma> "включать".
+# включить
+<http://voice.iot/function/On/label1> rdfs:label "включить"@ru ;
+	<http://voice.iot/lemma> "включить".
 <http://voice.iot/function/On/label2> rdfs:label "вруби"@ru ;
 	<http://voice.iot/lemma> "врубить".
 
-# выключать
-<http://voice.iot/function/Off/label1> rdfs:label "выключать"@ru ;
-	<http://voice.iot/lemma> "выключать".
+# выключить
+<http://voice.iot/function/Off/label1> rdfs:label "выключить"@ru ;
+	<http://voice.iot/lemma> "выключить".
 <http://voice.iot/function/Off/label2> rdfs:label "выруби"@ru ;
 	<http://voice.iot/lemma> "вырубить".
 <http://voice.iot/function/Off/label3> rdfs:label "оффни"@ru ;
