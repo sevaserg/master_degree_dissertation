@@ -69,19 +69,21 @@ class nl_query:
         devices = json.loads(f.read())
         f.close()
         system_q = ""
+        ip_q = ""
         func_q   = ""
-        
+        should_find_query = (self.system == "none")
         for device in devices["devices"]:
             if device["KB_ID"] == self.system:
-                system_q = device["system"]
+                should_find_query = True
+            if should_find_query:
                 for q in device["queries"]:
                     if q["KB_ID"] == self.commandProto:
+                        system_q = device["system"]
                         func_q = q["name"]
+                        ip_q = device["ip"]
                         break
-                break
-        if system_q != "" and func_q != "":
-            pass
-
+        if ip_q != "":
+            print(f"{system_q} ({ip_q}) - {func_q}")
 
 if __name__ == "__main__":
     f       = open ('config.json', "r")
