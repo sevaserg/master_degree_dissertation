@@ -1,2 +1,3 @@
 venv-windows
 ./activate.bat
+./vosk-model-small-ru-0.22

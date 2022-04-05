@@ -3,7 +3,7 @@ from tabulate import tabulate
 import pymorphy2
 import json
 import sys
-
+from speechRecog import speech_recog as sr
 g = Graph()
 devices_json_path = ""
 
@@ -86,10 +86,10 @@ class nl_query:
             print(f"{system_q} ({ip_q}) - {func_q}")
 
 if __name__ == "__main__":
-    f       = open ('config.json', "r")
-    config  = json.loads(f.read())
-    
-    kb_path = ""
+    f           = open ('config.json', "r")
+    config      = json.loads(f.read())
+    model_path  = ""
+    kb_path     = ""
     try:
         devices_json_path = config["devices_path"]
     except:
@@ -109,10 +109,19 @@ if __name__ == "__main__":
         f.close()
     except:
         raise Exception ("Knowledge base file \""+kb_path+"\" does not exist! Check if path in config.json is correct.")
+    try:
+        f = open (kb_path, "r")
+        f.close()
+    except:
+        raise Exception ("Knowledge base file \""+kb_path+"\" does not exist! Check if path in config.json is correct.")
+
     g.parse(kb_path)
     
     morph = pymorphy2.MorphAnalyzer(lang='ru')
-    
-    
+    speech_recognition = sr()
+    ################################################
+    while True:
+        pass
+    ################################################
     data = nl_query(sys.argv[1])
     data.execute()
