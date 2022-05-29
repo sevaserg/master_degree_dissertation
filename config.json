@@ -1,1 +1,1 @@
-{"devices_path":"./devices.json","kb_path":"./iot_model.ttl","language_model_path":"./vosk-model-small-ru-0.22"}
+{"kb_path":"./iot_model.owl","language_model_path":"vosk-model-small-ru-0.22"}

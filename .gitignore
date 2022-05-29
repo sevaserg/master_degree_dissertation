@@ -1,3 +1,9 @@
 venv-windows
 ./activate.bat
 ./vosk-model-small-ru-0.22
+./temp.py
+./vosk_recog_test.py
+./dist/*
+./build/*
+./*.spec
+./vosk-model-small-ru-0.22/*
