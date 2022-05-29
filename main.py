@@ -12,6 +12,12 @@ import time
 
 morph = pymorphy2.MorphAnalyzer(lang='ru')
 
+class bcolors:
+    TEXT   = '\033[37;44m'
+    OK     = '\033[37;102m'
+    FAIL   = '\033[37;101m'
+    ENDC = '\033[0m'
+
 def current_milli_time():
     return round(time.time() * 1000)
 
@@ -50,10 +56,11 @@ def tokenize_and_lemmatize(sentence):
             data.append(morph.parse(word)[0].normal_form)
         except:
             data.append(word)
-    print("Lemmatized:", end=" ")
+    print("Lemmatized: "+bcolors.TEXT, end="")
     for word in data:
         print(word, end = " ")
-    print("| took", str(current_milli_time() - current_time), "milliseconds.")
+    #print("| took", str(current_milli_time() - current_time), "milliseconds.")
+    print(bcolors.ENDC)
     return data
 
 class nl_query:
@@ -65,26 +72,26 @@ class nl_query:
         self.location        = "{iot}here"
         self.needs_property = True
         tokenized_sentence  = tokenize_and_lemmatize(sentence)
-        print(tokenized_sentence)
+        #print(tokenized_sentence)
         for word in tokenized_sentence:
             data_to_parse   = sparql(f'''?obj rdfs:label "{word}" .
     ?obj a ?cls''')
             for entry in data_to_parse:
                 if str(entry.cls) == str(iot)+"System":
                     self.systems.append(str(entry.obj))
-                    print("SYSTEM ADDED,", self.systems[0])
+                    #print("SYSTEM ADDED,", self.systems[0])
                 if str(entry.cls) == str(iot)+"Command":
                     self.command = str(entry.obj)
                     for needs_prop in sparql(f'iot:{self.command.split("#")[1]} iot:needsProperty ?needs_prop'):
                         if needs_prop.needs_prop.find("true") == -1:
                             self.needs_property = False
-                    print("CMD ADDED, ", self.command)
+                    #print("CMD ADDED, ", self.command)
                 if str(entry.cls) == str(iot)+"Property":
                     self.property = str(entry.obj)
-                    print("PROPERTY ADDED, ", self.property)
+                    #print("PROPERTY ADDED, ", self.property)
                 if str(entry.cls) == str(iot)+"Location":
                     self.location = str(entry.obj)
-                    print("LOCATION ADDED, ", self.location)
+                    #print("LOCATION ADDED, ", self.location)
         if len(self.systems) == 0 and self.property != "":
             for system in sparql(f'?obj iot:hasProperty iot:{self.property.split("#")[1]}'):
                 self.systems.append(system.obj)
@@ -100,12 +107,14 @@ class nl_query:
                             for cmd in sparql(f'iot:{self.property.split("#")[1]} iot:defaultCommand ?cmd'):
                                 self.command = cmd.cmd
 
-            if self.property == "" and len(self.systems) != 0 and self.needs_property == True:
-                for prop in sparql(f"iot:{self.systems[0].split('#')[1]} iot:defaultProperty ?prop", True):
-                    self.property = prop.prop
-        if self.command == "" and (self.property == "" and self.needs_property) and len(self.systems) == 0:
+        if self.property == "" and len(self.systems) != 0 and self.needs_property == True:
+            for prop in sparql(f"iot:{self.systems[0].split('#')[1]} iot:defaultProperty ?prop"):
+                self.property = prop.prop
+        if self.command == "":
+            for com in sparql(f"iot:{self.property.split('#')[1]} iot:defaultCommand ?cmd"):
+                self.command = com.cmd
+        if self.command == "" or (self.property == "" and self.needs_property) or len(self.systems) == 0:
             self.can_be_executed = False
-
     def print(self):
         print("Systems: ", end = "")
         for system in self.systems:
@@ -116,9 +125,9 @@ class nl_query:
         print("Needs property:", self.needs_property)
         if self.property != "" and self.needs_property:
             print("Property:", self.property.split(iot)[1])
-        print("Can be executed:", self.can_be_executed)
+        print("Can be executed:", f"{bcolors.OK if self.can_be_executed else bcolors.FAIL}{self.can_be_executed}{bcolors.ENDC}" )
 
-
+    
     def execute(self):
         current_time = current_milli_time()
         if self.can_be_executed:
@@ -193,7 +202,7 @@ if __name__ == "__main__":
     g.parse(kb_path)
     if len(sys.argv) == 1:
         morph = pymorphy2.MorphAnalyzer(lang='ru')
-        qr = QueryRecognizer(r"./vosk-model-small-ru-0.22")
+        qr = QueryRecognizer(model_path)
         while True:
             current_time = current_milli_time()
             rec_data = json.loads(qr.recognize())["text"] # pass
